@@ -80,6 +80,11 @@ Input Password with Special Lowercase Character
     When User adds a special lowercase character
     Then Registration Error
 
+Test Random String
+    Given Browser is opened to Facebook registration page
+    When Random First Name
+    Then Registration Error
+
 
 
 *** Keywords ***

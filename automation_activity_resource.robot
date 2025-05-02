@@ -1,5 +1,7 @@
 *** Settings ***
 Library           SeleniumLibrary
+Library    String
+Library    DateTime
 
 *** Variables ***
 ${BROWSER}        Edge
@@ -272,3 +274,60 @@ User adds a special lowercase character
     Input Text    name:reg_passwd__    PASSWóRD123!
     Click Element    id:password_step_input
     Click Button    name:websubmit
+
+### REUSABLE COMPONENTS ###
+Random First Name
+    ${firstName}=    Generate Random Text
+    ${lastName}=    Generate Random Text
+    ${password}=    Generate Random Password
+    ${email}=    Generate Random Email
+    Input Text    name:firstname    ${firstName}
+    Input Text    name:lastname    ${lastName}
+    Get Current Date in UTC
+    Select Radio Button    sex    2
+    Input Text    name:reg_email__    ${email}
+    Input Text    name:reg_passwd__    ${password}
+    Click Element    id:password_step_input
+    Click Button    name:websubmit
+
+Get Current Date in UTC
+    ${currentMonth}=    Select Current Month in UTC
+    ${currentDay}=    Select Current Day in UTC
+    ${currentYear}=    Select Current Year in UTC
+    Click Element    name:birthday_month
+    Select From List By Value    name:birthday_month    ${currentMonth}
+    Click Element    name:birthday_day
+    Select From List By Value    name:birthday_day    ${currentDay}
+    Click Element    name:birthday_year
+    Select From List By Value    name:birthday_year    ${currentYear}
+
+Select Current Month in UTC
+    ${currentMonth}=    Get Current Date    result_format=%m
+    ${currentMonth}=    Evaluate    int("${currentMonth}")
+    RETURN    ${currentMonth}
+
+Select Current Day in UTC
+    ${currentDay}    Get Current Date    result_format=%d
+    ${currentDay}=    Evaluate    int("${currentDay}")
+    RETURN    ${currentDay}
+
+Select Current Year in UTC
+    ${currentYear}    Get Current Date    result_format=%Y
+    ${currentYear}=    Evaluate    int("${currentYear}")
+    RETURN    ${currentYear}
+
+Generate Random Text
+    ${randomUppercase}    Generate Random String    1    [UPPER]
+    ${randomLowercase}    Generate Random String    4    [LOWER]
+    RETURN    ${randomUppercase}${randomLowercase}
+
+Generate Random Password
+    ${randomText}    Generate Random String    8    [LETTERS]
+    ${randomNumbers}    Generate Random String    4    [NUMBERS]
+    ${specialCharacters}=    Evaluate    ''.join(random.choices(string.punctuation, k=2))    modules=random
+    RETURN    ${randomText}${randomNumbers}${specialCharacters}
+
+Generate Random Email
+    ${randomText}    Generate Random String    5    [LETTERS]
+    ${randomNumbers}    Generate Random String    4    [NUMBERS]
+    RETURN    ${randomText}${randomNumbers}@gmail.com

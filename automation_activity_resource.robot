@@ -7,16 +7,7 @@ Library    DateTime
 ${BROWSER}        Edge
 ${DELAY}          0.5
 # ----------------------------------------
-${VALID FIRST NAME}     Juan
-${VALID LAST NAME}    Cruz
-${VALID MONTH}    6
-${VALID DAY}    1
-${VALID YEAR}    1990
-${VALID GENDER}    Male
-# ${VALID MOBILE NUMBER}
-${VALID EMAIL}    test_jc8754@gmail.com
-${VALID PASSWORD}    Password123!
-# ----------------------------------------
+@{VOWELS}    a    e    i    o    u
 @{MONTHS WITH 30 DAYS}    4    6    9    11
 @{MONTHS WITH 31 DAYS}    1    3    5    7    8    10    12
 @{DAYS 1 TO 29}    1    2    3    4    5    6    7    8    9    10    11    12    13    14    15    16    17    18    19    20    21    22    23    24    25    26    27    28    29
@@ -53,36 +44,28 @@ Selected date is not Valid
     Should Be Equal    ${errorMessage}    1    The error: "The selected date is not valid" is shown
 
 # NUMBER 1
-User enters valid credentials
-    Input Text    name:firstname    ${VALID FIRST NAME}
-    Input Text    name:lastname    ${VALID LAST NAME}
-    User selects correct month day and year
-    Select Radio Button    sex    2
-    Input Text    name:reg_email__    ${VALID EMAIL}
-    Input Text    name:reg_passwd__    ${VALID PASSWORD}
-    Click Button    name:websubmit
+Enter Valid Account Details
+    Input Valid Credentials
+    Select Valid Birthdate
+    Click Submit Button
 
-User selects correct month day and year
+Select Valid Birthdate
     Click Element    name:birthday_month
-    Select From List By Value    name:birthday_month    ${VALID MONTH}
+    Select From List By Value    name:birthday_month    12
     Click Element    name:birthday_day
-    Select From List By Value    name:birthday_day    ${VALID DAY}
+    Select From List By Value    name:birthday_day    4
     Click Element    name:birthday_year
-    Select From List By Value    name:birthday_year    ${VALID YEAR}
+    Select From List By Value    name:birthday_year    2000
 
 # ----------------------------------------
 
 # NUMBER 2
-User selects Month with Days not more than 30 and more than 13 years old
-    Input Text    name:firstname    ${VALID FIRST NAME}
-    Input Text    name:lastname    ${VALID LAST NAME}
-    User selects INCORRECT month day and year and more than 13 years old
-    Select Radio Button    sex    2
-    Input Text    name:reg_email__    ${VALID EMAIL}
-    Input Text    name:reg_passwd__    ${VALID PASSWORD}
-    Click Button    name:websubmit
+Fill Birthdate with Day 31 in a 30-Day Month
+    Input Valid Credentials
+    Select 31st on a 30-day Month
+    Click Submit Button
 
-User selects INCORRECT month day and year and more than 13 years old
+Select 31st on a 30-day Month
     ${randomMonthsWith30Days}    Evaluate    random.choice(${MONTHS WITH 30 DAYS})    modules=random
     ${randomNormalYear}    Evaluate    random.choice(${NORMAL YEARS})    modules=random
     Click Element    name:birthday_month
@@ -95,16 +78,12 @@ User selects INCORRECT month day and year and more than 13 years old
 # ----------------------------------------
 
 # NUMBER 3
-User selects FEBRUARY 29 30 or 31 on NON leap year and more than 13 years old
-    Input Text    name:firstname    ${VALID FIRST NAME}
-    Input Text    name:lastname    ${VALID LAST NAME}
-    User selects INCORRECT day and NON leap year and more than 13 years old
-    Select Radio Button    sex    2
-    Input Text    name:reg_email__    ${VALID EMAIL}
-    Input Text    name:reg_passwd__    ${VALID PASSWORD}
-    Click Button    name:websubmit
+Fill Birthdate with Invalid Day on February of Non-Leap Year
+    Input Valid Credentials
+    Select 29-31 of February on Non-Leap Year
+    Click Submit Button
 
-User selects INCORRECT day and NON leap year and more than 13 years old
+Select 29-31 of February on Non-Leap Year
     ${randomNormalYear}    Evaluate    random.choice(${NORMAL YEARS})    modules=random
     ${random293031Day}    Evaluate    random.choice(${DAYS 29 30 31})    modules=random
     Click Element    name:birthday_month
@@ -117,16 +96,12 @@ User selects INCORRECT day and NON leap year and more than 13 years old
 # ----------------------------------------
 
 # NUMBER 4
-User selects FEBRUARY 30 or 31 on leap year and more than 13 years old
-    Input Text    name:firstname    ${VALID FIRST NAME}
-    Input Text    name:lastname    ${VALID LAST NAME}
-    User selects INCORRECT day and leap year and more than 13 years old
-    Select Radio Button    sex    2
-    Input Text    name:reg_email__    ${VALID EMAIL}
-    Input Text    name:reg_passwd__    ${VALID PASSWORD}
-    Click Button    name:websubmit
+Fill Birthdate with Invalid Day on February of Leap Year
+    Input Valid Credentials
+    Select 30-31 of February on Leap Year
+    Click Submit Button
 
-User selects INCORRECT day and leap year and more than 13 years old
+Select 30-31 of February on Leap Year
     ${randomLeapYear}    Evaluate    random.choice(${LEAP YEARS})    modules=random
     ${random3031Day}    Evaluate    random.choice(${DAYS 30 31})    modules=random
     Click Element    name:birthday_month
@@ -139,16 +114,12 @@ User selects INCORRECT day and leap year and more than 13 years old
 # ----------------------------------------
 
 # NUMBER 5
-User enters birthdate with less than 13 years of age - in years
-    Input Text    name:firstname    ${VALID FIRST NAME}
-    Input Text    name:lastname    ${VALID LAST NAME}
-    User selects normal birth month and day but is less than 13 years old
-    Select Radio Button    sex    2
-    Input Text    name:reg_email__    ${VALID EMAIL}
-    Input Text    name:reg_passwd__    ${VALID PASSWORD}
-    Click Button    name:websubmit
+Fill Birth Year indicating Age Under 13 years old
+    Input Valid Credentials
+    Select Birth Year indicating Age under 13 years old
+    Click Submit Button
 
-User selects normal birth month and day but is less than 13 years old
+Select Birth Year indicating Age under 13 years old
     ${randomMonthsWith30Days}    Evaluate    random.choice(${MONTHS WITH 30 DAYS})    modules=random
     ${randomDays}    Evaluate    random.choice(${DAYS 1 TO 29})    modules=random
     Click Element    name:birthday_month
@@ -161,16 +132,12 @@ User selects normal birth month and day but is less than 13 years old
 # ----------------------------------------
 
 # NUMBER 6
-User enters birthdate with less than 13 years of age - in months
-    Input Text    name:firstname    ${VALID FIRST NAME}
-    Input Text    name:lastname    ${VALID LAST NAME}
-    User selects normal birth day and year but is less than 13 years old
-    Select Radio Button    sex    2
-    Input Text    name:reg_email__    ${VALID EMAIL}
-    Input Text    name:reg_passwd__    ${VALID PASSWORD}
-    Click Button    name:websubmit
+Fill Birth Month indicating Age Under 13 years old
+    Input Valid Credentials
+    Select Birth Month indicating Age under 13 years old
+    Click Submit Button
 
-User selects normal birth day and year but is less than 13 years old
+Select Birth Month indicating Age under 13 years old
     ${randomDays}    Evaluate    random.choice(${DAYS 1 TO 29})    modules=random
     Click Element    name:birthday_month
     Select From List By Value    name:birthday_month    5
@@ -182,16 +149,12 @@ User selects normal birth day and year but is less than 13 years old
 # ----------------------------------------
 
 # NUMBER 7
-User enters birthdate with less than 13 years of age - in days
-    Input Text    name:firstname    ${VALID FIRST NAME}
-    Input Text    name:lastname    ${VALID LAST NAME}
-    User selects normal birthdate but is less than 13 years old
-    Select Radio Button    sex    2
-    Input Text    name:reg_email__    ${VALID EMAIL}
-    Input Text    name:reg_passwd__    ${VALID PASSWORD}
-    Click Button    name:websubmit
+Fill Birth Day indicating Age Under 13 years old
+    Input Valid Credentials
+    Select Birth Day indicating Age under 13 years old
+    Click Submit Button
 
-User selects normal birthdate but is less than 13 years old
+Select Birth Day indicating Age under 13 years old
     Click Element    name:birthday_month
     Select From List By Value    name:birthday_month    4
     Click Element    name:birthday_day
@@ -202,27 +165,27 @@ User selects normal birthdate but is less than 13 years old
 # ----------------------------------------
 
 # NUMBER 8
-User did not modify the birthdate
-    Input Text    name:firstname    ${VALID FIRST NAME}
-    Input Text    name:lastname    ${VALID LAST NAME}
+Default Birthdate
+    ${firstName}=    Generate Random Text
+    ${lastName}=    Generate Random Text
+    ${email}=    Generate Random Email
+    ${password}=    Generate Random Password
+    Input Text    name:firstname    ${firstName}
+    Input Text    name:lastname    ${lastName}
     Select Radio Button    sex    2
-    Input Text    name:reg_email__    ${VALID EMAIL}
-    Input Text    name:reg_passwd__    ${VALID PASSWORD}
+    Input Text    name:reg_email__    ${email}
+    Input Text    name:reg_passwd__    ${password}
     Click Button    name:websubmit
 
 # ----------------------------------------
 
 # NUMBER 9
-User birthdate matches current month and day
-    Input Text    name:firstname    ${VALID FIRST NAME}
-    Input Text    name:lastname    ${VALID LAST NAME}
-    User selects birthdate and is exactly 13 years old
-    Select Radio Button    sex    2
-    Input Text    name:reg_email__    ${VALID EMAIL}
-    Input Text    name:reg_passwd__    ${VALID PASSWORD}
-    Click Button    name:websubmit
+Fill Birthdate indicating 13 years old Today
+    Input Valid Credentials
+    Select birthdate for Age Exactly 13 years old Today
+    Click Submit Button
 
-User selects birthdate and is exactly 13 years old
+Select birthdate for Age Exactly 13 years old Today
     Click Element    name:birthday_month
     Select From List By Value    name:birthday_month    4
     Click Element    name:birthday_day
@@ -236,58 +199,73 @@ User selects birthdate and is exactly 13 years old
 
 # PASSWORD LOWERCASE
 User inputs more than one lowercase character
-    Input Text    name:firstname    ${VALID FIRST NAME}
-    Input Text    name:lastname    ${VALID LAST NAME}
-    User selects correct month day and year
+    ${firstName}=    Generate Random Text
+    ${lastName}=    Generate Random Text
+    ${email}=    Generate Random Email
+    Input Text    name:firstname    ${firstName}
+    Input Text    name:lastname    ${lastName}
+    Select Valid Date in UTC
     Select Radio Button    sex    2
-    Input Text    name:reg_email__    ${VALID EMAIL}
+    Input Text    name:reg_email__    ${email}
     Input Text    name:reg_passwd__    Password123!
     Click Element    id:password_step_input
     Click Button    name:websubmit
 
 User inputs ONLY one lowercase character
-    Input Text    name:firstname    ${VALID FIRST NAME}
-    Input Text    name:lastname    ${VALID LAST NAME}
-    User selects correct month day and year
+    ${firstName}=    Generate Random Text
+    ${lastName}=    Generate Random Text
+    ${email}=    Generate Random Email
+    Input Text    name:firstname    ${firstName}
+    Input Text    name:lastname    ${lastName}
+    Select Valid Date in UTC
     Select Radio Button    sex    2
-    Input Text    name:reg_email__    ${VALID EMAIL}
+    Input Text    name:reg_email__    ${email}
     Input Text    name:reg_passwd__    pASSWORD123!
     Click Element    id:password_step_input
     Click Button    name:websubmit
 
 User DOES NOT ADD a lowercase character
-    Input Text    name:firstname    ${VALID FIRST NAME}
-    Input Text    name:lastname    ${VALID LAST NAME}
-    User selects correct month day and year
+    ${firstName}=    Generate Random Text
+    ${lastName}=    Generate Random Text
+    ${email}=    Generate Random Email
+    Input Text    name:firstname    ${firstName}
+    Input Text    name:lastname    ${lastName}
+    Select Valid Date in UTC
     Select Radio Button    sex    2
-    Input Text    name:reg_email__    ${VALID EMAIL}
+    Input Text    name:reg_email__    ${email}
     Input Text    name:reg_passwd__    PASSWORD123!
     Click Element    id:password_step_input
     Click Button    name:websubmit
 
 User adds a special lowercase character
-    Input Text    name:firstname    ${VALID FIRST NAME}
-    Input Text    name:lastname    ${VALID LAST NAME}
-    User selects correct month day and year
-    Select Radio Button    sex    2
-    Input Text    name:reg_email__    ${VALID EMAIL}
-    Input Text    name:reg_passwd__    PASSWóRD123!
-    Click Element    id:password_step_input
-    Click Button    name:websubmit
-
-### REUSABLE COMPONENTS ###
-Random First Name
     ${firstName}=    Generate Random Text
     ${lastName}=    Generate Random Text
-    ${password}=    Generate Random Password
     ${email}=    Generate Random Email
     Input Text    name:firstname    ${firstName}
     Input Text    name:lastname    ${lastName}
-    Get Current Date in UTC
+    Select Valid Date in UTC
+    Select Radio Button    sex    2
+    Input Text    name:reg_email__    ${email}
+    Input Text    name:reg_passwd__    PASSWóRD123!
+    Click Element    id:password_step_input
+    Click Submit Button
+
+# ----------------------------------------
+### ------- REUSABLE COMPONENTS ------- ###
+# ----------------------------------------
+
+Input Valid Credentials
+    ${firstName}=    Generate Random Text
+    ${lastName}=    Generate Random Text
+    ${email}=    Generate Random Email
+    ${password}=    Generate Random Password
+    Input Text    name:firstname    ${firstName}
+    Input Text    name:lastname    ${lastName}
     Select Radio Button    sex    2
     Input Text    name:reg_email__    ${email}
     Input Text    name:reg_passwd__    ${password}
-    Click Element    id:password_step_input
+
+Click Submit Button
     Click Button    name:websubmit
 
 Get Current Date in UTC
@@ -316,10 +294,46 @@ Select Current Year in UTC
     ${currentYear}=    Evaluate    int("${currentYear}")
     RETURN    ${currentYear}
 
+Select Valid Date in UTC
+    ${year}    ${month}    ${day}=    Generate Random Valid Birthdate
+
+    Click Element    name:birthday_month
+    Select From List By Value    name:birthday_month    ${month}
+    Click Element    name:birthday_day
+    Select From List By Value    name:birthday_day    ${day}
+    Click Element    name:birthday_year
+    Select From List By Value    name:birthday_year    ${year}
+
+Generate Random Valid Birthdate
+    ${currentYear}    Get Current Date    result_format=%Y
+    ${currentYear}=    Evaluate    int("${currentYear}")
+    ${validYear}    Evaluate    ${currentYear}-13
+
+    ${randomYear}    Evaluate    random.randint(1900, ${validYear})    modules=random
+    ${randomMonth}    Evaluate    random.randint(1, 12)    modules=random
+    
+    ${maxDay}    Run Keyword If    ${randomMonth} == ${FEBRUARY}
+    ...    ${maxDay}=    Run Keyword    Get Maximum Day in February    ${randomYear}
+    ...  ELSE IF    ${randomMonth} in @{MONTHS WITH 30 DAYS}    Set Variable    30
+    ...  ELSE    Set Variable    31    
+
+    ${randomDay}    Evaluate    random.randint(1, ${maxDay})    modules=random
+
+    RETURN    ${randomYear}    ${randomMonth}    ${randomDay}
+
+Get Maximum Day in February
+    [Arguments]    ${year}
+    ${isLeapYear}=    Evaluate    ${year} in @{LEAP YEARS}
+    ${maxDay}=    Run Keyword If    ${isLeapYear}    Set Variable    29    ELSE    Set Variable    28
+
+    RETURN    ${maxDay}
+
+
 Generate Random Text
+     ${randomVowel}    Evaluate    random.choice(${VOWELS})    modules=random
     ${randomUppercase}    Generate Random String    1    [UPPER]
     ${randomLowercase}    Generate Random String    4    [LOWER]
-    RETURN    ${randomUppercase}${randomLowercase}
+    RETURN    ${randomUppercase}${randomVowel}${randomLowercase}
 
 Generate Random Password
     ${randomText}    Generate Random String    8    [LETTERS]

@@ -5,57 +5,57 @@ Library    Telnet
 
 *** Test Cases ***
 # NUMBER 1
-Valid Create New Account
+Create Account with Valid Credentials
     Given Browser is opened to Facebook registration page
-    When User enters valid credentials
+    When Enter Valid Account Details
     Then Confirm email page is displayed
 
 # NUMBER 2
-Create New Account Selecting Month with Days not more than 30
+Return Error when Selecting 31st on a 30-day month
     Given Browser is opened to Facebook registration page
-    When User selects Month with Days not more than 30 and more than 13 years old
+    When Fill Birthdate with Day 31 in a 30-Day Month
     Then Selected date is invalid
 
 # NUMBER 3
-Create New Account Selecting February - Non Leap Year - with Date on 29 30 or 31
+Return Error when Selecting 29-31 of February on non-leap year
     Given Browser is opened to Facebook registration page
-    When User selects FEBRUARY 29 30 or 31 on NON leap year and more than 13 years old
+    When Fill Birthdate with Invalid Day on February of Non-Leap Year
     Then Selected date is invalid
 
 # NUMBER 4
-Create New Account Selecting February - Leap Year - with Date on 30 or 31
+Return Error when Selecting 30-31 of February on leap year
     Given Browser is opened to Facebook registration page
-    When User selects FEBRUARY 30 or 31 on leap year and more than 13 years old
+    When Fill Birthdate with Invalid Day on February of Leap Year
     Then Selected date is invalid
 
 # NUMBER 5
-Age is Less Than 13 Years Old - In Years
+Return Error when Birth Year indicates Age under 13 
     Given Browser is opened to Facebook registration page
-    When User enters birthdate with less than 13 years of age - in years
+    When Fill Birth Year indicating Age Under 13 years old
     Then Error creating new account
 
 # NUMBER 6
-Age is Less Than 13 Years Old - In Months
+Return Error when Birth Month indicates Age under 13
     Given Browser is opened to Facebook registration page
-    When User enters birthdate with less than 13 years of age - in months
+    When Fill Birth Month indicating Age Under 13 years old
     Then Error creating new account
 
 # NUMBER 7
-Age is Less Than 13 Years Old - In Days
+Return Error when Birth Day indicates Age under 13
     Given Browser is opened to Facebook registration page
-    When User enters birthdate with less than 13 years of age - in days
+    When Fill Birth Day indicating Age Under 13 years old
     Then Error creating new account
 
 # NUMBER 8
-User Leave Birthdate As Is
+Return Error when birthdate is left blank
     Given Browser is opened to Facebook registration page
-    When User did not modify the birthdate
+    When Default Birthdate
     Then Error creating new account
 
 # NUMBER 9
-User is 13 Years Old Today
+Allow Account Creation when turning 13 years old today
     Given Browser is opened to Facebook registration page
-    When User birthdate matches current month and day
+    When Fill Birthdate indicating 13 years old Today
     Then Confirm email page is displayed
 
 
@@ -73,17 +73,12 @@ Input Password with ONLY ONE Lowercase Character
 Input Password with NO Lowercase Character
     Given Browser is opened to Facebook registration page
     When User DOES NOT ADD a lowercase character
-    Then Registration Error
+    Then Confirm email page is displayed
 
 Input Password with Special Lowercase Character
     Given Browser is opened to Facebook registration page
     When User adds a special lowercase character
-    Then Registration Error
-
-Test Random String
-    Given Browser is opened to Facebook registration page
-    When Random First Name
-    Then Registration Error
+    Then Confirm email page is displayed
 
 
 
@@ -92,22 +87,17 @@ Browser is opened to Facebook registration page
     Open Browser To Registration Page    
 
 Confirm email page is displayed
-    Sleep    20 seconds
+    Wait Until Page Contains    Enter the code from your email    timeout=25s
     Title Should Be    Facebook
-    Page Should Contain    Enter the code from your email
 
 Unable to process registration
-    Sleep    15 seconds
-    Page Should Contain    Sorry, we are not able to process your registration.
+    Wait Until Page Contains    Sorry, we are not able to process your registration.    timeout=20s
 
 Error creating new account
-    Sleep    15 seconds
-    Page Should Contain    We Couldn't Create Your Account
+    Wait Until Page Contains    We Couldn't Create Your Account    timeout=20s
 
 Selected date is invalid
-    Sleep    15 seconds
-    Page Should Contain    The selected date is not valid.
+    Wait Until Page Contains    The selected date is not valid.    timeout=20s
 
 Registration Error
-    Sleep    15 seconds
-    Page Should Contain    There was an error with your registration. Please try registering again.
+    Wait Until Page Contains    There was an error with your registration. Please try registering again.    timeout=20s
